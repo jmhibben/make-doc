@@ -1,0 +1,1 @@
+pandoc -f markdown meta.md $1 -t docx --standalone -o $2 --reference-doc=/root/.pandoc/docx/story.docx
