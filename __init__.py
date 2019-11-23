@@ -1,2 +1,2 @@
-from .makestory import *
+from .pandocwrapper import *
 from .tests import *
