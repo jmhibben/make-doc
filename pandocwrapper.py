@@ -15,18 +15,20 @@ class PandocWrapper(object):
         self.refPath = '/root/.pandoc/docx/story.docx'
         self.fType = fromType
         self.tType = toType
-        self.files
+        self.files = []
 
     '''Get the names of all files in the folder, and make sure they're only files'''
     def scan(self, loc='.', ext='.md'):
         self.files = [f for f in glob(loc + '/*' + ext) if self.verify(f)]
+        return self.files
 
-    def stringify(fromList):
+    def stringify(self, fromList):
         return fromList.join(' ')
 
-    def verify(name):
+    def verify(self, name):
         return isfile(name)
 
-    def convert(files, outname):
-        completed = subprocess.run(self.converter, '-f', self.fType, flist.join(' '), '-t', self.tType, '--standalone', '-o', outname, '--reference-doc=' + self.refPath)
+    def convert(self, outname):
+        self.scan()
+        completed = subprocess.run([self.converter, '-f', self.fType, ' '.join(self.files), '-t', self.tType, '--standalone', '-o', outname, '--reference-doc=' + self.refPath], stdout=subprocess.PIPE)
         return completed
