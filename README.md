@@ -6,7 +6,7 @@ This is a utility project designed to streamline the process of converting docum
 
 ### Commit Messages
 
-The semantics for commit messages is
+The semantics for commit messages is:
 
 ```
 <TYPE> [scope]: <brief description>
