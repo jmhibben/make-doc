@@ -7,8 +7,8 @@ if __name__ == "__main__":
 
     cli.add_argument("outfile", help="Name of the output file")
 
-    cli.parse_args()
+    args = cli.parse_args()
 
     pandoc = PandocWrapper()
 
-    pandoc.convert(cli.outfile)
+    pandoc.convert(args.outfile)
