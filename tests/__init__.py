@@ -8,6 +8,8 @@ from os import getcwd
 
 path.append(getcwd() + '/..')
 from pandocwrapper import *
+from makestory import *
 
 # Make test modules available
-from .convert import *
+from .pandocwrapper import *
+from .cli import *
