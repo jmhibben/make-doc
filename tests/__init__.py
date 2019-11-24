@@ -7,9 +7,9 @@ from sys import path
 from os import getcwd
 
 path.append(getcwd() + '/..')
-from pandocwrapper import *
+from pandoc import *
 from makestory import *
 
 # Make test modules available
-from .pandocwrapper import *
+from .pandoc import *
 from .cli import *

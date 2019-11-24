@@ -1,5 +1,5 @@
 import argparse
-from pandocwrapper import PandocWrapper
+from pandoc import PandocWrapper
 
 # Only do something if the file is being run directly
 if __name__ == "__main__":

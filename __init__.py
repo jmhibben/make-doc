@@ -1,2 +1,2 @@
-from .pandocwrapper import *
+from .pandoc import *
 from .tests import *
