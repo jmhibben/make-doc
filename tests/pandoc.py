@@ -1,4 +1,4 @@
-from pandocwrapper import PandocWrapper
+from pandoc import PandocWrapper
 import unittest
 
 class PandocWrapperTests(unittest.TestCase):
