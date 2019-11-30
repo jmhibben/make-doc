@@ -13,3 +13,4 @@ from makestory import *
 # Make test modules available
 from .pandoc import *
 from .cli import *
+from .metadata import *

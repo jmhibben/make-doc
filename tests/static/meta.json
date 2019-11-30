@@ -1,0 +1,11 @@
+{
+  "author": "James Hibben",
+  "title": "README",
+  "from": "markdown",
+  "to": "docx",
+  "files": [
+    "./README.md"
+  ],
+  "outfile": "./tests/output/README.docx",
+  "refdoc": "/root/.pandoc/docx/story.docx"
+}
