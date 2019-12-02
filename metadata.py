@@ -1,6 +1,8 @@
 import json
 import logging as log
 
+log.getLogger(__name__)
+
 class Metadata(object):
     FIELDS = [
             'author',
@@ -35,38 +37,62 @@ class Metadata(object):
     def __load(self):
         with open(self.__filename) as f:
             self.__file = f
-        self.__raw = json.load(self.__file)
+            self.__raw = json.load(self.__file)
 
     def __parse(self):
         """Parse the metadata document for important information"""
         self.__meta = {}
         keys = Metadata.FIELDS
         for k in keys:
-            val = self.__get_raw(k)
+            val = self.get_raw(k)
             if not val is None:
-                self.__set_meta(k, val)
+                self.set_meta(k, val)
+
+    def __source(self, source=None):
+        """Internal method for reliably fetching a source"""
+        meta = None
+    
+        if source is None or source is 'meta':
+            meta = self.__meta
+        elif source is 'raw':
+            meta = self.__raw
+        else:
+            log.warning('Unknown source; using meta')
+            meta = self.__meta
+
+        return meta
+
+    def __get(self, field, source=None):
+        """Internal method for fetching values from a given source"""
+        meta = self.__source(source)
+        val = None
+        
+        # Get value from source
+        try:
+            val = meta.get(field)
+        finally:
+            return val
+
+    def __set(self, field, value, source=None):
+        """Internal method for setting values to a given source"""
+        meta = self.__source(source)
+        meta[field] = value
 
     def get_meta(self, field):
-        """Gets the given metadata field value. Logs a warning and returns `None` when the field isn't found."""
-        val = None
-        try:
-            val = self.__meta[field]
-        except:
-            log.warning('Unable to locate ' + field + ' attribute in metadata')
-            log.warning('Looking for ' + field + ' in raw...')
-            val = self.__get_raw(field)
+        """Gets the given metadata field value; returns `None` and logs a warning if field is not found"""
+        val = self.__get(field, 'meta')
+        if val is None:
+            log.warning('Unable to find ' + field + ' in meta document')
         return val
 
-    def __set_meta(self, field, value):
-        """Sets the value to the given field on the meta object"""
-        #self.__meta.update((field, value))
-        self.__meta[field] = value
-
-    def __get_raw(self, field):
-        """Gets the data from the raw metadata file object. Returns 'None' and logs a warning when the field isn't found."""
-        val = None
-        try:
-            val = self.__raw[field]
-        except:
-            log.warning('Unable to locate ' + field + ' attribute in meta file')
+    def get_raw(self, field):
+        """Gets the given metadata from the raw metadata object; returns 'None' and logs a warning if field is not found"""
+        val = self.__get(field, 'raw')
+        if val is None:
+            log.warning('unable to find ' + field + ' in raw document')
         return val
+
+    def set_meta(self, field, value):
+        """Sets the value to the given field on the metadata object"""
+        self.__set(field, value, 'meta')
+
